@@ -11,7 +11,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, r2_score, mean_squared_error
+from sklearn.metrics import accuracy_score, mean_squared_error
 import matplotlib.pyplot as plt
 
 # Load data into DataFrame
@@ -45,16 +45,23 @@ def forest(x, y):
     forest = RandomForestClassifier(n_estimators=100)
     forest.fit(x_train, y_train.ravel())
 
-    y_pred = forest.predict(x_test)
+    y_pred_train = forest.predict(x_train)
+    y_pred_test = forest.predict(x_test)
 
-    print('\nAccuracy Score for Random Forest with default hyperparameters:')
-    print(accuracy_score(y_test, y_pred))
+    print('\nTraining Accuracy Score for Random Forest with default hyperparameters:')
+    print(accuracy_score(y_train, y_pred_train))
 
-    print('\nMean Squared Error for Random Forest with default hyperparameters:')
-    print(mean_squared_error(y_test, y_pred))
+    print('\nTraining Mean Squared Error for Random Forest with default hyperparameters:')
+    print(mean_squared_error(y_train, y_pred_train))
 
-    plt.scatter(range(len(y_test)), y_test, color='red')
-    plt.scatter(range(len(y_pred)), y_pred, color='blue')
+    print('\nTesting Accuracy Score for Random Forest with default hyperparameters:')
+    print(accuracy_score(y_test, y_pred_test))
+
+    print('\nTesting Mean Squared Error for Random Forest with default hyperparameters:')
+    print(mean_squared_error(y_test, y_pred_test))
+
+    plt.scatter(range(len(y_test)), y_test, color = 'red')
+    plt.scatter(range(len(y_pred_test)), y_pred_test, color = 'blue')
 
     plt.xlabel('Output Position')
     plt.ylabel('Output')
@@ -96,16 +103,23 @@ def forest2(x, y):
     forest1 = RandomForestClassifier(n_estimators=100, max_features = 'log2', max_depth = 4, random_state = 42, max_leaf_nodes=10, n_jobs=-1)
     forest1.fit(x_train1, y_train1.ravel())
 
-    y_pred1 = forest1.predict(x_test1)
+    y_pred_test = forest1.predict(x_test1)
+    y_pred_train = forest1.predict(x_train1)
 
-    print('\nAccuracy Score for Random Forest with modified hyperparameters:')
-    print(accuracy_score(y_test1, y_pred1))
+    print('\nTraining Accuracy Score for Random Forest with modified hyperparameters:')
+    print(accuracy_score(y_train1, y_pred_train))
+
+    print('\nTraining Mean Squared Error for Random Forest with modified hyperparameters:')
+    print(mean_squared_error(y_train1, y_pred_train))
+
+    print('\nTraining Accuracy Score for Random Forest with modified hyperparameters:')
+    print(accuracy_score(y_test1, y_pred_test))
 
     print('\nMean Squared Error for Random Forest with modified hyperparameters:')
-    print(mean_squared_error(y_test1, y_pred1))
+    print(mean_squared_error(y_test1, y_pred_test))
 
     plt.scatter(range(len(y_test1)), y_test1, color='red')
-    plt.scatter(range(len(y_pred1)), y_pred1, color='blue')
+    plt.scatter(range(len(y_pred_test)), y_pred_test, color='blue')
 
     plt.xlabel('Output Position')
     plt.ylabel('Output')
